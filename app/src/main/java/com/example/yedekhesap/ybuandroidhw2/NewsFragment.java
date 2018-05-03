@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -30,11 +31,13 @@ public class NewsFragment extends Fragment {
     public ListView newsList;
     public ArrayList<String> news ;
     public ArrayList<String> links ;
-
+    public TextView newsTextView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_fragment,container,false);
+        newsTextView = (TextView) view.findViewById(R.id.newsTexView);
+        newsTextView.setVisibility(View.VISIBLE);
         newsList =(ListView) view.findViewById(R.id.newsList);
         new NewsYBU().execute();
         return view;
@@ -52,7 +55,6 @@ public class NewsFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
 
             try{
                 news = new ArrayList<String>();
@@ -73,7 +75,8 @@ public class NewsFragment extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
 
-            ArrayAdapter adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,news);
+            ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,news);
+            newsTextView.setVisibility(View.GONE);
             newsList.setAdapter(adapter);
             newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

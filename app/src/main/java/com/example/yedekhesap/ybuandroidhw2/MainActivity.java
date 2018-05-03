@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        TabLayout tabItem = (TabLayout) findViewById(R.id.tabs);
+        tabItem.getTabAt(0).setIcon(R.drawable.if_food_c202_2427848);
+        tabItem.getTabAt(1).setIcon(R.drawable.if_megaphone_1___325001);
+        tabItem.getTabAt(2).setIcon(R.drawable.if_newspaper_171259);
 
     }
 

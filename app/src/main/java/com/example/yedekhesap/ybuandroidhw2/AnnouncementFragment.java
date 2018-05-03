@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -29,11 +30,13 @@ public class AnnouncementFragment extends Fragment {
     public ListView announces;
     public ArrayList<String> announcement;
     public ArrayList<String> links;
-
+    public  TextView announceTextView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.announcements_fragment,container,false);
+        announceTextView = (TextView) view.findViewById(R.id.announceTextView);
+        announceTextView.setVisibility(View.VISIBLE);
         announces =(ListView) view.findViewById(R.id.announceList);
         new AnnouncementYBU().execute();
         return view;
@@ -62,7 +65,6 @@ public class AnnouncementFragment extends Fragment {
                 while(iterator.hasNext()){
                     Element div =iterator.next();
                     announcement.add(div.text());
-                    System.out.println("Value 1: " + div.select("a").attr("href"));
                     links.add(div.select("a").attr("href"));
 
 
@@ -81,6 +83,8 @@ public class AnnouncementFragment extends Fragment {
         protected void onPostExecute(Void aVoid){
 
             ArrayAdapter adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,announcement);
+            if(announcement.size()>0)
+            announceTextView.setVisibility(View.GONE);
             announces.setAdapter(adapter);
             announces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
